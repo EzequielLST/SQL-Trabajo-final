@@ -316,10 +316,15 @@
         <mxCell id="hSwZNqIodmIrNViKCxrn-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hSwZNqIodmIrNViKCxrn-1" target="hSwZNqIodmIrNViKCxrn-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="hSwZNqIodmIrNViKCxrn-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="hSwZNqIodmIrNViKCxrn-1" target="hSwZNqIodmIrNViKCxrn-3">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="hSwZNqIodmIrNViKCxrn-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hSwZNqIodmIrNViKCxrn-1" target="hSwZNqIodmIrNViKCxrn-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="600" />
+              <mxPoint x="610" y="605" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hSwZNqIodmIrNViKCxrn-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="hSwZNqIodmIrNViKCxrn-1" target="hSwZNqIodmIrNViKCxrn-3">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="hSwZNqIodmIrNViKCxrn-1" value="Items Venta" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#3399FF;" vertex="1" parent="1">
@@ -329,7 +334,7 @@
           <mxGeometry x="630" y="585" width="75" height="40" as="geometry" />
         </mxCell>
         <mxCell id="hSwZNqIodmIrNViKCxrn-3" value="ID venta" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF8000;" vertex="1" parent="1">
-          <mxGeometry x="675" y="625" width="60" height="40" as="geometry" />
+          <mxGeometry x="670" y="630" width="60" height="40" as="geometry" />
         </mxCell>
         <mxCell id="hSwZNqIodmIrNViKCxrn-4" value="ID Libro" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FF8000;" vertex="1" parent="1">
           <mxGeometry x="680" y="670" width="60" height="40" as="geometry" />
