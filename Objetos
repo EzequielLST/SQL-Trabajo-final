@@ -1,0 +1,172 @@
+--VISTAS--
+CREATE VIEW Ventas_Empleado AS
+SELECT 
+    e.nombre AS Empleado,
+    s.dire AS Sucursal,
+    COUNT(v.id_venta) AS Total_Ventas,
+    SUM(v.total) AS Monto_Total_Vendido
+FROM 
+    ventas v
+JOIN 
+    empleados e ON v.id_emp = e.id_emp
+JOIN 
+    sucursales s ON e.id_sucur = s.id_sucur
+GROUP BY 
+    e.id_emp, s.dire;
+---------------------------------------------------------------
+CREATE VIEW Autores_Libros AS
+SELECT 
+    a.nombre AS Autor,
+    l.nombre AS Libro,
+    l.genero AS Genero,
+    e.nombre AS Editorial
+FROM 
+    libros l
+JOIN 
+    autores a ON l.id_autor = a.id_autor
+JOIN 
+    editoriales e ON l.id_edit = e.id_edit;
+---------------------------------------------------------
+CREATE VIEW Detalle_Venta AS
+SELECT 
+    v.id_venta AS ID_Venta,
+    c.nombre AS Cliente,
+    e.nombre AS Empleado,
+    l.nombre AS Libro,
+    iv.unidades AS Cantidad,
+    iv.precio_unid AS Precio_Unidad,
+    iv.precio_total AS Precio_Total
+FROM 
+    ventas v
+JOIN 
+    clientes c ON v.id_cliente = c.id_cliente
+JOIN 
+    empleados e ON v.id_emp = e.id_emp
+JOIN 
+    Item_venta iv ON v.id_venta = iv.id_venta
+JOIN 
+    libros l ON iv.id_libro = l.id_libro;
+----------------------------------------------------------------
+CREATE VIEW Vista_Ventas_Mensuales_Sucursal AS
+SELECT 
+    s.dire AS Sucursal,
+    YEAR(v.fecha) AS Año,
+    MONTH(v.fecha) AS Mes,
+    SUM(v.total) AS Total_Ventas_Mensuales
+FROM 
+    ventas v
+JOIN 
+    empleados e ON v.id_emp = e.id_emp
+JOIN 
+    sucursales s ON e.id_sucur = s.id_sucur
+GROUP BY 
+    s.dire, YEAR(v.fecha), MONTH(v.fecha);
+-----------------------------------------------------------------
+CREATE VIEW Vista_Stock_Libros_Sucursales AS
+SELECT 
+    s.dire AS Sucursal,
+    l.nombre AS Libro,
+    l.genero AS Genero,
+    l.edicion AS Edicion,
+    st.unidad AS Cantidad_Disponible,
+    st.precio AS Precio_Venta
+FROM 
+    stock st
+JOIN 
+    libros l ON st.id_libro = l.id_libro
+JOIN 
+    sucursales s ON st.id_sucur = s.id_sucur;
+-------------------------------------------------------
+--FUNCIONES-- 
+CREATE FUNCTION Precio_Total(venta_id INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total INT;
+    
+    SELECT SUM(unidades * precio_unid) 
+    INTO total
+    FROM Item_venta 
+    WHERE id_venta = venta_id;
+    
+    RETURN total;
+END $$
+
+DELIMITER ;
+---------------------------------------------------
+DELIMITER $$
+
+CREATE FUNCTION VentasXSucurXAñoXMes(sucursal_id INT, anio INT, mes INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE total_ventas INT;
+    
+    SELECT SUM(v.total)
+    INTO total_ventas
+    FROM ventas v
+    JOIN empleados e ON v.id_emp = e.id_emp
+    WHERE e.id_sucur = sucursal_id
+    AND YEAR(v.fecha) = anio
+    AND MONTH(v.fecha) = mes;
+    
+    RETURN total_ventas;
+END $$
+
+DELIMITER ;
+---------------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE Actualizar_Stock_Libro_Venta(
+    IN venta_id INT
+)
+BEGIN
+    UPDATE stock s
+    JOIN Item_venta iv 
+        ON s.id_libro = iv.id_libro 
+        AND s.id_sucur = (SELECT e.id_sucur FROM ventas v 
+                          JOIN empleados e ON v.id_emp = e.id_emp 
+                          WHERE v.id_venta = venta_id)
+    SET s.unidad = s.unidad - iv.unidades
+    WHERE iv.id_venta = venta_id;
+END $$
+
+DELIMITER ;
+----------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE Insert_Cliente(
+    IN cliente_nombre VARCHAR(30),
+    IN cliente_dni INT,
+    IN cliente_direccion VARCHAR(50),
+    IN cliente_codigo_postal INT
+)
+BEGIN
+    INSERT INTO clientes (nombre, dni, direccion, cd)
+    VALUES (cliente_nombre, cliente_dni, cliente_direccion, cliente_codigo_postal);
+END $$
+
+DELIMITER ;
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
